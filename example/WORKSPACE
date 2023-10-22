@@ -4,8 +4,6 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 # Python Rules #
 ################
 
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-
 http_archive(
     name = "rules_python",
     sha256 = "9d04041ac92a0985e344235f5d946f71ac543f1b1565f2cdbc9a2aaee8adf55b",
@@ -23,24 +21,15 @@ py_repositories()
 
 http_archive(
     name = "rules_rust",
-    sha256 = "994435ca2c874d92c169388019e04ad1c1b11649dede40180f25a15bce0b3115",
-    strip_prefix = "rules_rust-920256900c367357bf4dae5719b8ebf210e91a0f",
-    urls = [
-        # Master branch as of 2021-3-23
-        "https://github.com/bazelbuild/rules_rust/archive/920256900c367357bf4dae5719b8ebf210e91a0f.zip",
-    ],
+    sha256 = "9ecd0f2144f0a24e6bc71ebcc50a1ee5128cedeceb32187004532c9710cb2334",
+    urls = ["https://github.com/bazelbuild/rules_rust/releases/download/0.29.1/rules_rust-v0.29.1.tar.gz"],
 )
 
-http_archive(
-    name = "bazel_skylib",
-    sha256 = "9a737999532daca978a158f94e77e9af6a6a169709c0cee274f0a4c3359519bd",
-    strip_prefix = "bazel-skylib-1.0.0",
-    url = "https://github.com/bazelbuild/bazel-skylib/archive/1.0.0.tar.gz",
-)
+load("@rules_rust//rust:repositories.bzl", "rules_rust_dependencies", "rust_register_toolchains")
 
-load("@rules_rust//rust:repositories.bzl", "rust_repositories")
+rules_rust_dependencies()
 
-rust_repositories(edition = "2018")
+rust_register_toolchains()
 
 ##############
 # PyO3 Rules #
